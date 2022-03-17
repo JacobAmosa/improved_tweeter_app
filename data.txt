@@ -1,0 +1,9 @@
+{
+        "authToken": {
+        "token": "fsdfsdfsd",
+        "datetime": "fjdksljdf"
+        }
+        "followerAlias": "sdfdsfsdfd",
+        "limit": 5,
+        "lastFolloweeAlias": "bobby",
+}

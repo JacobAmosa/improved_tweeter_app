@@ -1,6 +1,7 @@
 package edu.byu.cs.tweeter.client.model.service;
 
 import edu.byu.cs.shared.model.domain.AuthToken;
+import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetUserTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.LoginTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.LogoutTask;
@@ -13,6 +14,10 @@ import edu.byu.cs.tweeter.client.model.service.backgroundTask.observer.SimpleNot
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.observer.UserNotificationObserver;
 
 public class UserService {
+
+    private static final String URL_PATH = "/login";
+
+    private ServerFacade serverFacade;
 
     //******************************** Followers Presenter **************************************************
 
@@ -67,5 +72,7 @@ public class UserService {
                 userAlias, password, img, new AuthNotificationHandler(getRegisterUserObserver));
         new Service(registerTask);
     }
+
+
 
 }

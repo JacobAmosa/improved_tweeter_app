@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 
 import edu.byu.cs.shared.model.domain.AuthToken;
 import edu.byu.cs.shared.model.domain.User;
+import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.FollowTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetFollowersCountTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetFollowersTask;
@@ -21,6 +22,9 @@ import edu.byu.cs.tweeter.client.model.service.backgroundTask.observer.PagedNoti
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.observer.SimpleNotificationObserver;
 
 public class FollowService {
+    static final String URL_PATH = "/getfollowing";
+
+    private ServerFacade serverFacade;
 
     //    *****************************   FollowingPresenter ***************************************
 
@@ -80,5 +84,19 @@ public class FollowService {
         new Service(followingCountTask);
     }
 
+    /**
+     * Returns an instance of {@link ServerFacade}. Allows mocking of the ServerFacade class for
+     * testing purposes. All usages of ServerFacade should get their instance from this method to
+     * allow for proper mocking.
+     *
+     * @return the instance.
+     */
+    public ServerFacade getServerFacade() {
+        if(serverFacade == null) {
+            serverFacade = new ServerFacade();
+        }
+
+        return new ServerFacade();
+    }
 
 }
