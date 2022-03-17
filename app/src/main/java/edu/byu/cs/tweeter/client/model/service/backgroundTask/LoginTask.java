@@ -48,7 +48,6 @@ public class LoginTask extends AuthenticateTask {
         if(serverFacade == null) {
             serverFacade = new ServerFacade();
         }
-
         return serverFacade;
     }
 

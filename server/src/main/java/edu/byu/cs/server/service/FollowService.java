@@ -1,7 +1,9 @@
 package edu.byu.cs.server.service;
 
 import edu.byu.cs.server.dao.FollowDAO;
+import edu.byu.cs.shared.model.net.request.FollowRequest;
 import edu.byu.cs.shared.model.net.request.FollowingRequest;
+import edu.byu.cs.shared.model.net.response.FollowResponse;
 import edu.byu.cs.shared.model.net.response.FollowingResponse;
 
 /**
@@ -43,6 +45,10 @@ public class FollowService {
             throw new RuntimeException("[BadRequest] Request needs to have a positive limit");
         }
         return getFollowingDAO().getFollowees(request);
+    }
+
+    public FollowResponse follow(FollowRequest request) {
+        return new FollowResponse(true, null);
     }
 
     /**

@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import edu.byu.cs.shared.model.net.TweeterRemoteException;
 import edu.byu.cs.shared.model.net.request.CreateStatusRequest;
+import edu.byu.cs.shared.model.net.request.FollowRequest;
 import edu.byu.cs.shared.model.net.request.FollowingRequest;
 import edu.byu.cs.shared.model.net.request.LoginRequest;
 import edu.byu.cs.shared.model.net.response.CreateStatusResponse;
+import edu.byu.cs.shared.model.net.response.FollowResponse;
 import edu.byu.cs.shared.model.net.response.FollowingResponse;
 import edu.byu.cs.shared.model.net.response.LoginResponse;
 
@@ -75,6 +77,18 @@ public class ServerFacade {
             throws IOException, TweeterRemoteException {
 
         CreateStatusResponse response = clientCommunicator.doPost(urlPath, request, null, CreateStatusResponse.class);
+
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
+        }
+    }
+
+    public FollowResponse follow(FollowRequest request, String urlPath)
+            throws IOException, TweeterRemoteException {
+
+        FollowResponse response = clientCommunicator.doPost(urlPath, request, null, FollowResponse.class);
 
         if(response.isSuccess()) {
             return response;
