@@ -1,6 +1,5 @@
 package edu.byu.cs.tweeter.client.model.service.backgroundTask;
 
-import android.os.Bundle;
 import android.os.Handler;
 
 import edu.byu.cs.shared.model.domain.AuthToken;
@@ -27,20 +26,6 @@ public abstract class GetCountTask extends AuthenticatedTask {
         return targetUser;
     }
 
-    @Override
-    protected void runTask() {
-        count = runCountTask();
+    protected abstract void runTask();
 
-        // Call sendSuccessMessage if successful
-        sendSuccessMessage();
-        // or call sendFailedMessage if not successful
-        // sendFailedMessage()
-    }
-
-    protected abstract int runCountTask();
-
-    @Override
-    protected void loadSuccessBundle(Bundle msgBundle) {
-        msgBundle.putInt(COUNT_KEY, count);
-    }
 }

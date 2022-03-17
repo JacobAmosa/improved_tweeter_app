@@ -2,8 +2,12 @@ package edu.byu.cs.server.service;
 
 import edu.byu.cs.server.dao.FollowDAO;
 import edu.byu.cs.shared.model.net.request.FollowRequest;
+import edu.byu.cs.shared.model.net.request.FollowerCountRequest;
+import edu.byu.cs.shared.model.net.request.FollowingCountRequest;
 import edu.byu.cs.shared.model.net.request.FollowingRequest;
 import edu.byu.cs.shared.model.net.response.FollowResponse;
+import edu.byu.cs.shared.model.net.response.FollowerCountResponse;
+import edu.byu.cs.shared.model.net.response.FollowingCountResponse;
 import edu.byu.cs.shared.model.net.response.FollowingResponse;
 
 /**
@@ -49,6 +53,14 @@ public class FollowService {
 
     public FollowResponse follow(FollowRequest request) {
         return new FollowResponse(true, null);
+    }
+
+    public FollowingCountResponse getFollowingCount(FollowingCountRequest request) {
+        return new FollowingCountResponse(true, null, 20);
+    }
+
+    public FollowerCountResponse getFollowerCount(FollowerCountRequest request) {
+        return new FollowerCountResponse(true, null, 20);
     }
 
     /**

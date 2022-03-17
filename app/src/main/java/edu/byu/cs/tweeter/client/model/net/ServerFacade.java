@@ -5,10 +5,14 @@ import java.io.IOException;
 import edu.byu.cs.shared.model.net.TweeterRemoteException;
 import edu.byu.cs.shared.model.net.request.CreateStatusRequest;
 import edu.byu.cs.shared.model.net.request.FollowRequest;
+import edu.byu.cs.shared.model.net.request.FollowerCountRequest;
+import edu.byu.cs.shared.model.net.request.FollowingCountRequest;
 import edu.byu.cs.shared.model.net.request.FollowingRequest;
 import edu.byu.cs.shared.model.net.request.LoginRequest;
 import edu.byu.cs.shared.model.net.response.CreateStatusResponse;
 import edu.byu.cs.shared.model.net.response.FollowResponse;
+import edu.byu.cs.shared.model.net.response.FollowerCountResponse;
+import edu.byu.cs.shared.model.net.response.FollowingCountResponse;
 import edu.byu.cs.shared.model.net.response.FollowingResponse;
 import edu.byu.cs.shared.model.net.response.LoginResponse;
 
@@ -89,6 +93,30 @@ public class ServerFacade {
             throws IOException, TweeterRemoteException {
 
         FollowResponse response = clientCommunicator.doPost(urlPath, request, null, FollowResponse.class);
+
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
+        }
+    }
+
+    public FollowingCountResponse getFollowingCount(FollowingCountRequest request, String urlPath)
+            throws IOException, TweeterRemoteException {
+
+        FollowingCountResponse response = clientCommunicator.doPost(urlPath, request, null, FollowingCountResponse.class);
+
+        if(response.isSuccess()) {
+            return response;
+        } else {
+            throw new RuntimeException(response.getMessage());
+        }
+    }
+
+    public FollowerCountResponse getFollowerCount(FollowerCountRequest request, String urlPath)
+            throws IOException, TweeterRemoteException {
+
+        FollowerCountResponse response = clientCommunicator.doPost(urlPath, request, null, FollowerCountResponse.class);
 
         if(response.isSuccess()) {
             return response;
