@@ -70,7 +70,6 @@ public class GetFollowersTask extends PagedUserTask {
         if(serverFacade == null) {
             serverFacade = new ServerFacade();
         }
-
         return new ServerFacade();
     }
 
@@ -98,7 +97,8 @@ public class GetFollowersTask extends PagedUserTask {
 
     @Override
     protected Pair<List<User>, Boolean> getItems() {
-        return getFakeData().getPageOfUsers(getLastItem(), getLimit(), getTargetUser());
+        // don't need anymore.
+        return null;
     }
 
     protected void loadSuccessBundle(Bundle msgBundle) {
