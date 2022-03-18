@@ -8,11 +8,13 @@ import edu.byu.cs.shared.model.net.request.FollowerCountRequest;
 import edu.byu.cs.shared.model.net.request.FollowingCountRequest;
 import edu.byu.cs.shared.model.net.request.FollowingRequest;
 import edu.byu.cs.shared.model.net.request.IsFollowerRequest;
+import edu.byu.cs.shared.model.net.request.UnfollowRequest;
 import edu.byu.cs.shared.model.net.response.FollowResponse;
 import edu.byu.cs.shared.model.net.response.FollowerCountResponse;
 import edu.byu.cs.shared.model.net.response.FollowingCountResponse;
 import edu.byu.cs.shared.model.net.response.FollowingResponse;
 import edu.byu.cs.shared.model.net.response.IsFollowerResponse;
+import edu.byu.cs.shared.model.net.response.UnfollowResponse;
 
 /**
  * Contains the business logic for getting the users a user is following.
@@ -58,6 +60,8 @@ public class FollowService {
     public FollowResponse follow(FollowRequest request) {
         return new FollowResponse(true, null);
     }
+
+    public UnfollowResponse unfollow(UnfollowRequest request) {return new UnfollowResponse(true, null); }
 
     public FollowingCountResponse getFollowingCount(FollowingCountRequest request) {
         return new FollowingCountResponse(true, null, 20);
