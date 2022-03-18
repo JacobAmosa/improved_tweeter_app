@@ -1,14 +1,18 @@
 package edu.byu.cs.server.service;
 
+import java.util.Random;
+
 import edu.byu.cs.server.dao.FollowDAO;
 import edu.byu.cs.shared.model.net.request.FollowRequest;
 import edu.byu.cs.shared.model.net.request.FollowerCountRequest;
 import edu.byu.cs.shared.model.net.request.FollowingCountRequest;
 import edu.byu.cs.shared.model.net.request.FollowingRequest;
+import edu.byu.cs.shared.model.net.request.IsFollowerRequest;
 import edu.byu.cs.shared.model.net.response.FollowResponse;
 import edu.byu.cs.shared.model.net.response.FollowerCountResponse;
 import edu.byu.cs.shared.model.net.response.FollowingCountResponse;
 import edu.byu.cs.shared.model.net.response.FollowingResponse;
+import edu.byu.cs.shared.model.net.response.IsFollowerResponse;
 
 /**
  * Contains the business logic for getting the users a user is following.
@@ -61,6 +65,15 @@ public class FollowService {
 
     public FollowerCountResponse getFollowerCount(FollowerCountRequest request) {
         return new FollowerCountResponse(true, null, 20);
+    }
+
+    public IsFollowerResponse isFollower(IsFollowerRequest request) {
+        if(request.getFollower() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a follower alias");
+        } else if(request.getFollowee() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a followee alias");
+        }
+        return new IsFollowerResponse(new Random().nextInt() > 0);
     }
 
     /**

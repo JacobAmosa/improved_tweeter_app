@@ -2,7 +2,11 @@ package edu.byu.cs.server.service;
 
 import edu.byu.cs.shared.model.domain.AuthToken;
 import edu.byu.cs.shared.model.domain.User;
+import edu.byu.cs.shared.model.net.request.FollowingRequest;
+import edu.byu.cs.shared.model.net.request.GetUserRequest;
 import edu.byu.cs.shared.model.net.request.LoginRequest;
+import edu.byu.cs.shared.model.net.response.FollowingResponse;
+import edu.byu.cs.shared.model.net.response.GetUserResponse;
 import edu.byu.cs.shared.model.net.response.LoginResponse;
 import edu.byu.cs.shared.util.FakeData;
 
@@ -19,6 +23,13 @@ public class UserService {
         User user = getDummyUser();
         AuthToken authToken = getDummyAuthToken();
         return new LoginResponse(user, authToken);
+    }
+
+    public GetUserResponse getUser(GetUserRequest request) {
+        if(request.getUserAlias() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a follower alias");
+        }
+        return new GetUserResponse(getFakeData().findUserByAlias(request.getUserAlias()));
     }
 
     /**
