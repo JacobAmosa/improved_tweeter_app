@@ -40,6 +40,12 @@ public class Status implements Serializable {
         this.mentions = mentions;
     }
 
+    public Status(String post, User user, String datetime) {
+        this.post = post;
+        this.user = user;
+        this.datetime = datetime;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -64,6 +70,22 @@ public class Status implements Serializable {
 
     public List<String> getMentions() {
         return mentions;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
+    public void setUrls(List<String> urls) {
+        this.urls = urls;
+    }
+
+    public void setMentions(List<String> mentions) {
+        this.mentions = mentions;
     }
 
     @Override

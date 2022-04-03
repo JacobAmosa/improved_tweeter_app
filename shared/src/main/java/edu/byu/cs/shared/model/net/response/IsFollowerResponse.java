@@ -3,7 +3,7 @@ package edu.byu.cs.shared.model.net.response;
 public class IsFollowerResponse extends Response{
     private Boolean isFollower;
 
-    IsFollowerResponse(String message) {
+    public IsFollowerResponse(String message) {
         super(false, message);
     }
 

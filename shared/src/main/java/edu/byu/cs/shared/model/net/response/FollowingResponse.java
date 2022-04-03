@@ -11,7 +11,7 @@ import edu.byu.cs.shared.model.net.request.FollowingRequest;
  */
 public class FollowingResponse extends PagedResponse {
 
-    private List<User> followees;
+    public List<User> followees;
 
     /**
      * Creates a response indicating that the corresponding request was unsuccessful. Sets the
@@ -41,6 +41,10 @@ public class FollowingResponse extends PagedResponse {
      */
     public List<User> getFollowees() {
         return followees;
+    }
+
+    public void setFollowees(List<User> followees) {
+        this.followees = followees;
     }
 
     @Override

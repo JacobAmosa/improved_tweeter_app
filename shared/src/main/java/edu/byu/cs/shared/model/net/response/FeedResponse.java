@@ -12,6 +12,10 @@ public class FeedResponse extends PagedResponse{
         super(success, hasMorePages);
     }
 
+    public FeedResponse(String message) {
+        super(false, false);
+    }
+
     public FeedResponse(List<Status> feed, boolean hasMorePages) {
         super(true, hasMorePages);
         this.feed = feed;
@@ -19,6 +23,10 @@ public class FeedResponse extends PagedResponse{
 
     public List<Status> getFeed() {
         return feed;
+    }
+
+    public void setFeed(List<Status> feed) {
+        this.feed = feed;
     }
 
     @Override

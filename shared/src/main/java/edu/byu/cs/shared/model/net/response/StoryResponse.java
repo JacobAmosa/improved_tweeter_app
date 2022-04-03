@@ -17,8 +17,16 @@ public class StoryResponse extends PagedResponse{
         this.story = story;
     }
 
+    public StoryResponse(String message) {
+        super(true, false);
+    }
+
     public List<Status> getStory() {
         return story;
+    }
+
+    public void setStory(List<Status> story) {
+        this.story = story;
     }
 
     @Override

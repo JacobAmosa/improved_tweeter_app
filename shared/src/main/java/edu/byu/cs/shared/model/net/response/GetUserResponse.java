@@ -5,7 +5,7 @@ import edu.byu.cs.shared.model.domain.User;
 public class GetUserResponse extends Response{
     private User user;
 
-    GetUserResponse(String message) {
+    public GetUserResponse(String message) {
         super(false, message);
     }
 

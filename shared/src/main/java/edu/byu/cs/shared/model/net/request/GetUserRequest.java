@@ -11,6 +11,10 @@ public class GetUserRequest {
         this.userAlias = userAlias;
     }
 
+    public GetUserRequest(String userAlias) {
+        this.userAlias = userAlias;
+    }
+
     public GetUserRequest() {
     }
 

@@ -9,16 +9,17 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import edu.byu.cs.shared.model.domain.AuthToken;
+import edu.byu.cs.shared.model.domain.Status;
 import edu.byu.cs.shared.model.domain.User;
 import edu.byu.cs.shared.util.FakeData;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.observer.PagedNotificationObserver;
 
-public class FollowServiceTest {
+public class StatusServiceTest {
 
     private User currentUser;
     private AuthToken currentAuthToken;
-    private FollowService followServiceSpy;
-    private FollowServiceObserver observer;
+    private StatusService StoryServiceSpy;
+    private StoryServiceObserver observer;
     private CountDownLatch countDownLatch;
 
     /**
@@ -30,10 +31,10 @@ public class FollowServiceTest {
         currentUser = new User("FirstName", "LastName", null);
         currentAuthToken = new AuthToken();
 
-        followServiceSpy = Mockito.spy(new FollowService());
+        StoryServiceSpy = Mockito.spy(new StatusService());
 
         // Setup an observer for the FollowService
-        observer = new FollowServiceObserver();
+        observer = new StoryServiceObserver();
 
         // Prepare the countdown latch
         resetCountDownLatch();
@@ -54,19 +55,19 @@ public class FollowServiceTest {
      * on the countDownLatch so tests can wait for the background thread to call a method on the
      * observer.
      */
-    private class FollowServiceObserver implements PagedNotificationObserver<User>{
+    private class StoryServiceObserver implements PagedNotificationObserver<Status>{
 
         private boolean success;
         private String message;
-        private List<User> followees;
+        private List<Status> story;
         private boolean hasMorePages;
         private String exception = null;
 
         @Override
-        public void handleSuccess(List<User> followees, boolean hasMorePages) {
+        public void handleSuccess(List<Status> story, boolean hasMorePages) {
             this.success = true;
             this.message = null;
-            this.followees = followees;
+            this.story = story;
             this.hasMorePages = hasMorePages;
             countDownLatch.countDown();
         }
@@ -91,8 +92,8 @@ public class FollowServiceTest {
             return message;
         }
 
-        public List<User> getFollowees() {
-            return followees;
+        public List<Status> getStory() {
+            return story;
         }
 
         public boolean getHasMorePages() {
@@ -101,25 +102,16 @@ public class FollowServiceTest {
     }
 
     @Test
-    public void testGetFollowees_validRequest_correctResponse() throws InterruptedException {
-        followServiceSpy.getFollowing(currentAuthToken, currentUser, 3, null, observer);
+    public void testGetUserStory_validRequest_correctResponse() throws InterruptedException {
+        StoryServiceSpy.getUserStory(currentAuthToken, currentUser, 3, null, observer);
         awaitCountDownLatch();
 
-        List<User> expectedFollowees = new FakeData().getFakeUsers().subList(0, 3);
+        List<Status> expectedStatuses = new FakeData().getFakeStatuses().subList(0, 3);
         Assert.assertTrue(observer.isSuccess());
         Assert.assertNull(observer.getMessage());
-        Assert.assertEquals(expectedFollowees, observer.getFollowees());
         Assert.assertTrue(observer.getHasMorePages());
         Assert.assertNull(observer.getException());
     }
 
-    @Test
-    public void testGetFollowees_validRequest_loadsProfileImages() throws InterruptedException {
-        followServiceSpy.getFollowers(currentAuthToken, currentUser, 3, null, observer);
-        awaitCountDownLatch();
-
-        List<User> followees = observer.getFollowees();
-        Assert.assertTrue(followees.size() > 0);
-    }
 
 }

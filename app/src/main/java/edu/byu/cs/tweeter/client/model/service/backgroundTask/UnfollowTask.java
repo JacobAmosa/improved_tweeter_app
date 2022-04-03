@@ -10,6 +10,7 @@ import edu.byu.cs.shared.model.net.request.FollowRequest;
 import edu.byu.cs.shared.model.net.request.UnfollowRequest;
 import edu.byu.cs.shared.model.net.response.FollowResponse;
 import edu.byu.cs.shared.model.net.response.UnfollowResponse;
+import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 
 /**
@@ -39,7 +40,7 @@ public class UnfollowTask extends AuthenticatedTask {
     @Override
     protected void runTask() {
         try {
-            UnfollowRequest request = new UnfollowRequest(authToken, followee.getAlias());
+            UnfollowRequest request = new UnfollowRequest(authToken, followee, Cache.getInstance().getCurrUser());
             UnfollowResponse response = getServerFacade().unfollow(request, URL_PATH);
 
             if(response.isSuccess()) {

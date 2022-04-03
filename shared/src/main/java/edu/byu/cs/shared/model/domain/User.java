@@ -24,7 +24,8 @@ public class User implements Comparable<User>, Serializable {
      * URL that points to the user's profile image.
      */
     public String imageUrl;
-
+    public String password;
+    public String authToken;
 
     public User() {
     }
@@ -38,6 +39,43 @@ public class User implements Comparable<User>, Serializable {
         this.lastName = lastName;
         this.alias = alias;
         this.imageUrl = imageURL;
+    }
+
+    public User(String firstName, String lastName, String alias, String password, String imageURL) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.alias = alias;
+        this.imageUrl = imageURL;
+        this.password = password;
+    }
+
+    public User(String firstName, String lastName, String alias, String password, String imageURL, String authToken) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.alias = alias;
+        this.imageUrl = imageURL;
+        this.password = password;
+        this.authToken = authToken;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getFirstName() {
@@ -58,6 +96,14 @@ public class User implements Comparable<User>, Serializable {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

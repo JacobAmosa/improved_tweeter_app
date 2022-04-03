@@ -14,6 +14,7 @@ import edu.byu.cs.shared.model.net.request.RegisterRequest;
 import edu.byu.cs.shared.model.net.response.CreateStatusResponse;
 import edu.byu.cs.shared.model.net.response.RegisterResponse;
 import edu.byu.cs.shared.util.Pair;
+import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 
 /**
@@ -26,6 +27,7 @@ public class RegisterTask extends AuthenticateTask {
     private final String image;
     private final String username;
     private final String password;
+    private User user;
     protected AuthToken authToken;
     private ServerFacade serverFacade;
     static final String URL_PATH = "/register";
@@ -54,6 +56,9 @@ public class RegisterTask extends AuthenticateTask {
             RegisterResponse response = getServerFacade().register(request, URL_PATH);
 
             if(response.isSuccess()) {
+                user = response.getUser();
+                Cache.getInstance().setCurrUser(user);
+                Cache.getInstance().setCurrUserAuthToken(response.getAuthToken());
                 sendSuccessMessage();
             }
             else {
@@ -67,6 +72,7 @@ public class RegisterTask extends AuthenticateTask {
     }
 
     protected void loadSuccessBundle(Bundle msgBundle) {
+        msgBundle.putSerializable(USER_KEY, user);
     }
 
     @Override

@@ -11,6 +11,7 @@ import edu.byu.cs.shared.model.domain.Status;
 import edu.byu.cs.shared.model.net.TweeterRemoteException;
 import edu.byu.cs.shared.model.net.request.CreateStatusRequest;
 import edu.byu.cs.shared.model.net.response.CreateStatusResponse;
+import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 
 /**
@@ -47,7 +48,7 @@ public class PostStatusTask extends AuthenticatedTask {
     @Override
     protected void runTask() {
         try{
-            CreateStatusRequest request = new CreateStatusRequest(authToken, status.getPost());
+            CreateStatusRequest request = new CreateStatusRequest(authToken, status.getPost(), Cache.getInstance().getCurrUser());
             CreateStatusResponse response = getServerFacade().createStatus(request, URL_PATH);
 
             if(response.isSuccess()) {

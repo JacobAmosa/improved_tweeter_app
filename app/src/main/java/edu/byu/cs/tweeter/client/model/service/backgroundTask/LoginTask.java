@@ -9,6 +9,7 @@ import edu.byu.cs.shared.model.domain.User;
 import edu.byu.cs.shared.model.net.request.LoginRequest;
 import edu.byu.cs.shared.model.net.response.LoginResponse;
 import edu.byu.cs.shared.util.Pair;
+import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 
 /**
@@ -66,6 +67,8 @@ public class LoginTask extends AuthenticateTask {
             if(response.isSuccess()) {
                 this.user = response.getUser();
                 this.authToken = response.getAuthToken();
+                Cache.getInstance().setCurrUser(this.user);
+                Cache.getInstance().setCurrUserAuthToken(this.authToken);
                 sendSuccessMessage();
             }
             else {

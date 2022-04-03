@@ -8,6 +8,7 @@ import edu.byu.cs.shared.model.domain.AuthToken;
 import edu.byu.cs.shared.model.domain.User;
 import edu.byu.cs.shared.model.net.request.FollowRequest;
 import edu.byu.cs.shared.model.net.response.FollowResponse;
+import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 
 /**
@@ -37,7 +38,7 @@ public class FollowTask extends AuthenticatedTask {
     @Override
     protected void runTask() {
         try {
-            FollowRequest request = new FollowRequest(authToken, followee.getAlias());
+            FollowRequest request = new FollowRequest(authToken, followee, Cache.getInstance().getCurrUser());
             FollowResponse response = getServerFacade().follow(request, URL_PATH);
 
             if(response.isSuccess()) {

@@ -1,6 +1,7 @@
 package edu.byu.cs.tweeter.client.model.service.backgroundTask.handler;
 
 import android.os.Bundle;
+import android.os.Looper;
 
 import edu.byu.cs.shared.model.domain.AuthToken;
 import edu.byu.cs.shared.model.domain.User;

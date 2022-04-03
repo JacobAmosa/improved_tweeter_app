@@ -2,6 +2,7 @@ package edu.byu.cs.server.lambda;
 
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import edu.byu.cs.server.dao.DaoProvider;
 import edu.byu.cs.server.service.UserService;
 import edu.byu.cs.shared.model.net.request.LoginRequest;
 import edu.byu.cs.shared.model.net.response.LoginResponse;
@@ -13,7 +14,7 @@ import edu.byu.cs.shared.model.net.response.LoginResponse;
 public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse> {
     @Override
     public LoginResponse handleRequest(LoginRequest input, com.amazonaws.services.lambda.runtime.Context context) {
-        UserService userService = new UserService();
+        UserService userService = new UserService(new DaoProvider());
         return userService.login(input);
     }
 }

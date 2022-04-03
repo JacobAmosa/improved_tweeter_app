@@ -9,6 +9,7 @@ import edu.byu.cs.shared.model.net.request.LoginRequest;
 import edu.byu.cs.shared.model.net.request.LogoutRequest;
 import edu.byu.cs.shared.model.net.response.LoginResponse;
 import edu.byu.cs.shared.model.net.response.LogoutResponse;
+import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 
 /**
@@ -41,6 +42,7 @@ public class LogoutTask extends AuthenticatedTask {
             LogoutResponse response = getServerFacade().logout(request, URL_PATH);
 
             if(response.isSuccess()) {
+                Cache.getInstance().clearCache();
                 sendSuccessMessage();
             }
             else {
