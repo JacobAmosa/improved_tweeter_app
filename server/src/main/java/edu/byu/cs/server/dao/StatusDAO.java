@@ -2,16 +2,19 @@ package edu.byu.cs.server.dao;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.BatchWriteItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.QueryRequest;
 import com.amazonaws.services.dynamodbv2.model.QueryResult;
+import com.amazonaws.services.dynamodbv2.model.WriteRequest;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import edu.byu.cs.server.service.StatusService;
 import edu.byu.cs.shared.model.domain.Status;
 import edu.byu.cs.shared.model.domain.User;
 import edu.byu.cs.shared.model.net.request.CreateStatusRequest;
@@ -63,17 +67,17 @@ public class StatusDAO implements StatusInterface{
     }
 
     @Override
-    public CreateStatusResponse createStatus(CreateStatusRequest request, List<String> followers, String date) {
+    public CreateStatusResponse createStatus(CreateStatusRequest request, String date) {
         connectToTable("createStatus");
 
-        for (String alias: followers) {
-            Item item = new Item()
-                    .withPrimaryKey("receiver_alias", alias)
-                    .withString("time_stamp", date)
-                    .withString("message", request.getNewStatus())
-                    .withString("creator_alias", request.getUser().getAlias());
-            feedTable.putItem(item);
-        }
+//        for (String alias: followers) {
+//            Item item = new Item()
+//                    .withPrimaryKey("receiver_alias", alias)
+//                    .withString("time_stamp", date)
+//                    .withString("message", request.getNewStatus())
+//                    .withString("creator_alias", request.getUser().getAlias());
+//            feedTable.putItem(item);
+//        }
 
         Item item = new Item()
                 .withPrimaryKey("sender_alias", request.getUser().getAlias())
@@ -163,6 +167,48 @@ public class StatusDAO implements StatusInterface{
         }
 
         return new StoryResponse(story, hasMorePages);
+    }
+
+    @Override
+    public void addBatchToFeed(List<String> followerAlias, StatusService.StatusBatchMessage statusBatchMessage) {
+        TableWriteItems items = new TableWriteItems("feed");
+
+        for (String alias: followerAlias) {
+            Item item = new Item()
+                    .withPrimaryKey("receiver_alias", alias)
+                    .withString("time_stamp", statusBatchMessage.getStatus().getDatetime())
+                    .withString("message", statusBatchMessage.getStatus().getPost())
+                    .withString("creator_alias", statusBatchMessage.getStatus().getUser().alias);
+            items.addItemToPut(item);
+            if (items.getItemsToPut() != null && items.getItemsToPut().size() == 25) {
+                loopBatchWrite(items);
+                items = new TableWriteItems("feed");
+            }
+        }
+
+        if (items.getItemsToPut() != null && items.getItemsToPut().size() > 0) {
+            loopBatchWrite(items);
+        }
+    }
+
+    private void loopBatchWrite(TableWriteItems items) {
+        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
+                .withRegion("us-west-2")
+                .build();
+
+        DynamoDB dynamoDB = new DynamoDB(client);
+
+        // The 'dynamoDB' object is of type DynamoDB and is declared statically in this example
+        BatchWriteItemOutcome outcome = dynamoDB.batchWriteItem(items);
+        //logger.log("Wrote User Batch");
+
+        // Check the outcome for items that didn't make it onto the table
+        // If any were not added to the table, try again to write the batch
+        while (outcome.getUnprocessedItems().size() > 0) {
+            Map<String, List<WriteRequest>> unprocessedItems = outcome.getUnprocessedItems();
+            outcome = dynamoDB.batchWriteItemUnprocessed(unprocessedItems);
+        //logger.log("Wrote more Users");
+        }
     }
 
 

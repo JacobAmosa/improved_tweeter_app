@@ -1,5 +1,8 @@
 package edu.byu.cs.server.dao;
 
+import java.util.List;
+
+import edu.byu.cs.shared.model.domain.User;
 import edu.byu.cs.shared.model.net.request.GetUserRequest;
 import edu.byu.cs.shared.model.net.request.LoginRequest;
 import edu.byu.cs.shared.model.net.request.LogoutRequest;
@@ -14,4 +17,5 @@ public interface UserInterface {
     LogoutResponse logout(LogoutRequest request);
     RegisterResponse register(RegisterRequest request);
     GetUserResponse getUser(GetUserRequest request);
+    void addUserBatch(List<User> users);
 }

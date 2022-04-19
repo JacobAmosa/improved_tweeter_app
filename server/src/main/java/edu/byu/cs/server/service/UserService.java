@@ -29,11 +29,11 @@ public class UserService {
         } else if(request.getPassword() == null) {
             throw new RuntimeException("[BadRequest] Missing a password");
         }
-        LoginResponse loginResponse = new DaoProvider().getUserDAO().login(request);
+        LoginResponse loginResponse = dao.getUserDAO().login(request);
 
         AuthToken token = new AuthToken();
         if (loginResponse.isSuccess()) {
-            new DaoProvider().getAuthDAO().addToken(loginResponse.getAuthToken().getToken(),
+            dao.getAuthDAO().addToken(loginResponse.getAuthToken().getToken(),
                     loginResponse.getAuthToken().getDatetime());
         }
         return loginResponse;
@@ -42,14 +42,15 @@ public class UserService {
     public LogoutResponse logout(LogoutRequest request) {
         if(request.getAuthToken() == null){
             throw new RuntimeException("[BadRequest] Missing authToken");
-        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] invalid authToken");
         }
-        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
-        if (validToken < 0) {
-            return new LogoutResponse(false, "Your session has timed out.");
-        }
-        return new DaoProvider().getUserDAO().logout(request);
+//        else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] invalid authToken");
+//        }
+//        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
+//        if (validToken < 0) {
+//            return new LogoutResponse(false, "Your session has timed out.");
+//        }
+        return dao.getUserDAO().logout(request);
     }
 
     public RegisterResponse register(RegisterRequest request) {
@@ -64,26 +65,27 @@ public class UserService {
         } else if(request.getImage() == null) {
             throw new RuntimeException("[BadRequest] Missing an image");
         }
-        String url = new DaoProvider().getS3ImageDAO().uploadImage(request);
-        request.setImage(url);
+//        String url = dao.getS3ImageDAO().uploadImage(request);
+//        request.setImage(url);
         RegisterResponse registerResponse = new DaoProvider().getUserDAO().register(request);
-        new DaoProvider().getAuthDAO().addToken(registerResponse.getAuthToken().getToken(), registerResponse.getAuthToken().getDatetime());
+        dao.getAuthDAO().addToken(registerResponse.getAuthToken().getToken(), registerResponse.getAuthToken().getDatetime());
         return registerResponse;
     }
 
     public GetUserResponse getUser(GetUserRequest request) {
         if(request.getUserAlias() == null) {
             throw new RuntimeException("[BadRequest] Request needs to have a follower alias");
-        } else if(request.getAuthToken() == null) {
-            throw new RuntimeException("[BadRequest] Missing an authToken");
-        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] invalid authToken");
         }
-        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
-        if (validToken < 0) {
-            return new GetUserResponse("Your session has timed out.");
-        }
-        return new DaoProvider().getUserDAO().getUser(request);
+//        else if(request.getAuthToken() == null) {
+//            throw new RuntimeException("[BadRequest] Missing an authToken");
+//        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] invalid authToken");
+//        }
+//        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
+//        if (validToken < 0) {
+//            return new GetUserResponse("Your session has timed out.");
+//        }
+        return dao.getUserDAO().getUser(request);
     }
 
 }

@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements StatusDialogFragm
 
     @Override
     public void onStatusPosted(String post) {
-        postingToast = Toast.makeText(this, "Posting Status...", Toast.LENGTH_LONG);
+        postingToast = Toast.makeText(this, "Status Posted", Toast.LENGTH_LONG);
         postingToast.show();
 
         try {

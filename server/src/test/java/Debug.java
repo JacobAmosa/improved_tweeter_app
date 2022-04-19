@@ -1,5 +1,3 @@
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
@@ -8,6 +6,7 @@ import java.util.List;
 
 import edu.byu.cs.server.dao.AuthDAO;
 import edu.byu.cs.server.dao.DaoProvider;
+import edu.byu.cs.server.dao.Filler;
 import edu.byu.cs.server.dao.FollowDAO;
 import edu.byu.cs.server.dao.StatusDAO;
 import edu.byu.cs.server.dao.UserDAO;
@@ -188,7 +187,9 @@ public class Debug {
 //
 //        Long time = Calendar.getInstance().getTimeInMillis();
 //
-//        sDao.createStatus(new CreateStatusRequest(authToken, "5 times in feed and 1 in story", user1), aliases, String.valueOf(time));
+//        StatusService statusService = new StatusService(new DaoProvider());
+//        statusService.createStatus(new CreateStatusRequest(authToken, "after updating lambdas 2", user1));
+//        sDao.createStatus(new CreateStatusRequest(authToken, "300+ times in feed and 1 in story", user1), aliases, String.valueOf(time));
 //        int yy = 0;
 
 //        FeedResponse feed = sDao.getFeed(new FeedRequest(authToken, "@mallory", 10, null));
@@ -202,15 +203,13 @@ public class Debug {
 
         UserDAO uDao = new UserDAO();
 
-//        RegisterResponse reg = uDao.register(new RegisterRequest("mason", "bf", "@mason", "password", "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png"));
-//        int h = 0;
 
-//        UserService userService = new UserService();
-//        userService.register(new RegisterRequest("ruben", "amosa", "@ruben", "password", "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png"));
+//        UserService userService = new UserService(new DaoProvider());
+//        userService.register(new RegisterRequest("mallory", "romine", "@mallory", "password", "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png"));
 //        int kkk = 0;
 
-//        LoginResponse res = uDao.login(new LoginRequest("@mallory", "pwwssword"));
-//        int y = 0;
+        LoginResponse res = uDao.login(new LoginRequest("@mallory", "password"));
+        int y = 0;
 
 //        UserService userService = new UserService();
 //        LoginResponse l = userService.login(new LoginRequest("@mallory", "password"));
@@ -247,6 +246,8 @@ public class Debug {
 //        UserService userService = new UserService();
 //        userService.register(new RegisterRequest("lin", "bin", "@lin","password",imageBytesBase64));
 //        int pj = 0;
+
+//        Filler.fillDatabase();
 
 
 

@@ -24,4 +24,5 @@ public interface FollowInterface {
     FollowerCountResponse getFollowerCount(FollowerCountRequest request);
     IsFollowerResponse isFollower(IsFollowerRequest request);
     List<String> getFollowerAliases(String alias);
+    void addFollowersBatch(List<String> followers, String followTarget);
 }

@@ -73,14 +73,14 @@ public abstract class PagedPresenter<T> extends Presenter<PagedPresenter.View>{
         public void handleFailure(String message) {
             isLoading = false;
             view.setLoadingStatus(false);
-            view.displayErrorMessage("Failed to get items: " + message);
+//            view.displayErrorMessage("Failed to get items: " + message);
         }
 
         @Override
         public void handleException(Exception exception) {
             isLoading = false;
             view.setLoadingStatus(false);
-            view.displayErrorMessage("Failed to get items because of exception: " + exception.getMessage());
+//            view.displayErrorMessage("Failed to get items because of exception: " + exception.getMessage());
         }
     }
 

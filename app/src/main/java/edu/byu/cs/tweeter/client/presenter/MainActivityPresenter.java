@@ -117,12 +117,12 @@ public class MainActivityPresenter extends Presenter<MainActivityPresenter.View>
 
         @Override
         public void handleFailure(String message) {
-            view.displayErrorMessage("Failed to post status: " + message);
+//            view.displayErrorMessage("Failed to post status: " + message);
         }
 
         @Override
         public void handleException(Exception ex) {
-            view.displayErrorMessage("Failed to post status because of exception: " + ex.getMessage());
+//            view.displayErrorMessage("Failed to post status because of exception: " + ex.getMessage());
         }
     }
 

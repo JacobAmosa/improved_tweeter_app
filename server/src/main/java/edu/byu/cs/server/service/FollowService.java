@@ -41,14 +41,15 @@ public class FollowService {
             throw new RuntimeException("[BadRequest] Request needs to have a follower alias");
         } else if(request.getLimit() <= 0) {
             throw new RuntimeException("[BadRequest] Request needs to have a positive limit");
-        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] invalid authToken");
         }
-        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
-        if (validToken < 0) {
-            return new FollowingResponse("Your session has timed out.");
-        }
-        return new DaoProvider().getFollowDAO().getFollowing(request);
+//        else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] invalid authToken");
+//        }
+//        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
+//        if (validToken < 0) {
+//            return new FollowingResponse("Your session has timed out.");
+//        }
+        return dao.getFollowDAO().getFollowing(request);
     }
 
     /**
@@ -65,14 +66,15 @@ public class FollowService {
             throw new RuntimeException("[BadRequest] Request needs to have a follower alias");
         } else if(request.getLimit() <= 0) {
             throw new RuntimeException("[BadRequest] Request needs to have a positive limit");
-        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] invalid authToken");
         }
-        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
-        if (validToken < 0) {
-            return new FollowingResponse("Your session has timed out.");
-        }
-        return new DaoProvider().getFollowDAO().getFollowers(request);
+//        else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] invalid authToken");
+//        }
+//        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
+//        if (validToken < 0) {
+//            return new FollowingResponse("Your session has timed out.");
+//        }
+        return dao.getFollowDAO().getFollowers(request);
     }
 
     public FollowResponse follow(FollowRequest request) {
@@ -80,55 +82,59 @@ public class FollowService {
             throw new RuntimeException("[BadRequest] Request needs to have a followee alias");
         } else if(new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
             throw new RuntimeException("[BadRequest] Request needs to have a valid auth token");
-        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] invalid authToken");
         }
-        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
-        if (validToken < 0) {
-            return new FollowResponse(false, "Your session has timed out.");
-        }
-        return new DaoProvider().getFollowDAO().follow(request);
+//        else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] invalid authToken");
+//        }
+//        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
+//        if (validToken < 0) {
+//            return new FollowResponse(false, "Your session has timed out.");
+//        }
+        return dao.getFollowDAO().follow(request);
     }
 
     public UnfollowResponse unfollow(UnfollowRequest request) {
         if(request.getFollowee() == null) {
             throw new RuntimeException("[BadRequest] Request needs to have a followee alias");
-        } else if(new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] Request needs to have a valid auth token");
-        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] invalid authToken");
         }
-        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
-        if (validToken < 0) {
-            return new UnfollowResponse(false, "Your session has timed out.");
-        }
-        return new DaoProvider().getFollowDAO().unfollow(request);
+//        else if(new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] Request needs to have a valid auth token");
+//        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] invalid authToken");
+//        }
+//        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
+//        if (validToken < 0) {
+//            return new UnfollowResponse(false, "Your session has timed out.");
+//        }
+        return dao.getFollowDAO().unfollow(request);
     }
 
     public FollowingCountResponse getFollowingCount(FollowingCountRequest request) {
         if(request.getUser() == null) {
             throw new RuntimeException("[BadRequest] Request needs to have a user alias");
-        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] invalid authToken");
         }
-        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
-        if (validToken < 0) {
-            return new FollowingCountResponse(false, "Your session has timed out.", 0);
-        }
-        return new DaoProvider().getFollowDAO().getFollowingCount(request);
+//        else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] invalid authToken");
+//        }
+//        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
+//        if (validToken < 0) {
+//            return new FollowingCountResponse(false, "Your session has timed out.", 0);
+//        }
+        return dao.getFollowDAO().getFollowingCount(request);
     }
 
     public FollowerCountResponse getFollowerCount(FollowerCountRequest request) {
         if(request.getUser() == null) {
             throw new RuntimeException("[BadRequest] Request needs to have a user alias");
-        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] invalid authToken");
         }
-        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
-        if (validToken < 0) {
-            return new FollowerCountResponse(false, "Your session has timed out.", 0);
-        }
-        return new DaoProvider().getFollowDAO().getFollowerCount(request);
+//        else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] invalid authToken");
+//        }
+//        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
+//        if (validToken < 0) {
+//            return new FollowerCountResponse(false, "Your session has timed out.", 0);
+//        }
+        return dao.getFollowDAO().getFollowerCount(request);
     }
 
     public IsFollowerResponse isFollower(IsFollowerRequest request) {
@@ -136,14 +142,15 @@ public class FollowService {
             throw new RuntimeException("[BadRequest] Request needs to have a follower alias");
         } else if(request.getFollowee() == null) {
             throw new RuntimeException("[BadRequest] Request needs to have a followee alias");
-        } else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
-            throw new RuntimeException("[BadRequest] invalid authToken");
         }
-        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
-        if (validToken < 0) {
-            return new IsFollowerResponse("Your session has timed out");
-        }
-        return new DaoProvider().getFollowDAO().isFollower(request);
+//        else if (new DaoProvider().getAuthDAO().validateToken(request.getAuthToken().getToken()) == null) {
+//            throw new RuntimeException("[BadRequest] invalid authToken");
+//        }
+//        Long validToken = Long.parseLong(request.getAuthToken().getDatetime()) - tenHourValidation;
+//        if (validToken < 0) {
+//            return new IsFollowerResponse("Your session has timed out");
+//        }
+        return dao.getFollowDAO().isFollower(request);
     }
 
 }
